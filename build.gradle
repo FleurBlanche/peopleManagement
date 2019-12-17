@@ -12,10 +12,52 @@ buildscript {
 
 allprojects {
     repositories {
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         jcenter()
         google()
         maven {url "https://jitpack.io"}
         maven {url 'https://maven.google.com'}
+    }
+}
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if(details.requested.group == 'androidx.documentfile:documentfile')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.swiperefreshlayout:swiperefreshlayout')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.legacy:legacy-support-core-ui')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.legacy:legacy-support-core-utils')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.slidingpanelayout:slidingpanelayout')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.localbroadcastmanager:localbroadcastmanager')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.print:print')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+            else if(details.requested.group == 'androidx.asynclayoutinflater:asynclayoutinflater')
+            {
+                details.useVersion "1.0.0-rc01"
+            }
+        }
     }
 }
 
