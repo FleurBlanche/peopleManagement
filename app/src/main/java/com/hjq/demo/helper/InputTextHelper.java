@@ -206,7 +206,7 @@ public final class InputTextHelper implements TextWatcher {
 
     public static final class Builder {
 
-        /** 当前的 Activity */
+        /** 当前的 SocialActivity */
         private final Activity mActivity;
         /** 操作按钮的 View */
         private View mView;

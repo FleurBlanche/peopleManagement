@@ -83,9 +83,6 @@ public final class TestFragmentD extends MyLazyFragment<HomeActivity> {
             case R.id.btn_test_change:
                 startActivity(PhoneResetActivity.class);
                 break;
-            case R.id.btn_test_personal:
-                startActivity(PersonalDataActivity.class);
-                break;
             case R.id.btn_test_setting:
                 startActivity(SettingActivity.class);
                 break;

@@ -59,7 +59,7 @@ public final class ImagePagerAdapter extends PagerAdapter
 
     @Override
     public void onClick(View v) {
-        // 单击图片退出当前的 Activity
+        // 单击图片退出当前的 SocialActivity
         if (!mActivity.isFinishing()) {
             mActivity.finish();
         }

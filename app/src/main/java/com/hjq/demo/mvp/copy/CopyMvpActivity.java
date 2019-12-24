@@ -12,7 +12,7 @@ import java.util.List;
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/AndroidProject
  *    time   : 2018/11/17
- *    desc   : 可进行拷贝的MVP Activity 类
+ *    desc   : 可进行拷贝的MVP SocialActivity 类
  */
 public final class CopyMvpActivity extends MvpActivity implements CopyContract.View {
 

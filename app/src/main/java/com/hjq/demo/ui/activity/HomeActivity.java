@@ -15,6 +15,7 @@ import com.hjq.demo.common.MyLazyFragment;
 import com.hjq.demo.helper.ActivityStackManager;
 import com.hjq.demo.helper.DoubleClickHelper;
 import com.hjq.demo.other.KeyboardWatcher;
+import com.hjq.demo.ui.fragment.FriendFragment;
 import com.hjq.demo.ui.fragment.TestFragmentA;
 import com.hjq.demo.ui.fragment.TestFragmentB;
 import com.hjq.demo.ui.fragment.TestFragmentC;
@@ -62,9 +63,9 @@ public final class HomeActivity extends MyActivity
     protected void initData() {
         mPagerAdapter = new BaseFragmentAdapter<>(this);
         mPagerAdapter.addFragment(TestFragmentA.newInstance());
-        mPagerAdapter.addFragment(TestFragmentB.newInstance());
-        mPagerAdapter.addFragment(TestFragmentC.newInstance());
-        mPagerAdapter.addFragment(TestFragmentD.newInstance());
+        mPagerAdapter.addFragment(MomentActivity.newInstance());
+        mPagerAdapter.addFragment(FriendFragment.newInstance());
+        mPagerAdapter.addFragment(PersonalDataActivity.newInstance());
 
         mViewPager.setAdapter(mPagerAdapter);
 
@@ -160,7 +161,7 @@ public final class HomeActivity extends MyActivity
                 public void run() {
                     // 进行内存优化，销毁掉所有的界面
                     ActivityStackManager.getInstance().finishAllActivities();
-                    // 销毁进程（请注意：调用此 API 可能导致当前 Activity onDestroy 方法无法正常回调）
+                    // 销毁进程（请注意：调用此 API 可能导致当前 SocialActivity onDestroy 方法无法正常回调）
                     // System.exit(0);
                 }
             }, 300);

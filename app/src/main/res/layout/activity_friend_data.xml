@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.FriendDataActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="用户信息" />
+
+    <FrameLayout
+        android:id="@+id/fl_friend_data_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_white"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/personal_data_head"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <androidx.cardview.widget.CardView
+            style="@style/CircleCardViewStyle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end|center_vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_friend_data_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_head_placeholder" />
+
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_uid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        app:bar_leftText="@string/personal_data_id"
+        app:bar_rightText="880634" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/personal_data_name"
+        app:bar_rightHint="@string/personal_data_name_hint"
+        app:bar_rightText="Android user" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_motto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="座右铭"
+        app:bar_rightHint="设置座右铭"
+        app:bar_rightText="苟利国家生死以" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/personal_data_address"
+        app:bar_rightHint="@string/personal_data_address_hint"
+        app:bar_rightIcon="@drawable/ico_go_black"
+        app:bar_rightText="上海闵行区东川路800号" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="公司"
+        app:bar_rightText="上海交大" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="职位"
+        app:bar_rightText="学生" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="年龄"
+        app:bar_rightText="23" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="性别"
+        app:bar_rightText="男" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="邮箱"
+        app:bar_rightHint="立即设置"
+        app:bar_rightText="1007759354@qq.com"
+        app:bar_rightIcon="@drawable/ico_go_black" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_friend_data_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/personal_data_phone"
+        app:bar_rightHint=""
+        app:bar_rightIcon="@drawable/ico_go_black" >
+
+    </com.hjq.widget.layout.SettingBar>
+
+    <Button
+        android:id="@+id/sb_friend_data_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button"
+        android:text="历史记录"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/sb_friend_data_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button"
+        android:layout_marginTop="1dp"
+        android:text="添加好友"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+
+</LinearLayout>

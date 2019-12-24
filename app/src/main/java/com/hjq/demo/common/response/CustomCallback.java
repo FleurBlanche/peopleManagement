@@ -1,6 +1,8 @@
 package com.hjq.demo.common.response;
 
 
+import android.util.Log;
+
 import com.hjq.toast.ToastUtils;
 
 import com.hjq.demo.R;
@@ -18,6 +20,8 @@ public abstract class CustomCallback<T> implements Callback<Result<T>> {
         uiBeforeStart();
         if (response.code() == 200) {
             Result<T> res = response.body();
+            Log.d("apidebug",call.request().toString());
+            Log.d("apidebug",res.getData().toString());
             if (res.getCode() == ResultCode.SUCCESS.getCode()) {
                 processResult(res.getData());
             }

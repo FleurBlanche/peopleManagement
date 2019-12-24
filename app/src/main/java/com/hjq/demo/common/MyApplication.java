@@ -79,9 +79,9 @@ public final class MyApplication extends Application {
                 .enabled(true)
                 .trackActivities(true)
                 .minTimeBetweenCrashesMs(2000)
-                // 重启的 Activity
+                // 重启的 SocialActivity
                 .restartActivity(HomeActivity.class)
-                // 错误的 Activity
+                // 错误的 SocialActivity
                 .errorActivity(CrashActivity.class)
                 // 设置监听器
                 //.eventListener(new YourCustomEventListener())

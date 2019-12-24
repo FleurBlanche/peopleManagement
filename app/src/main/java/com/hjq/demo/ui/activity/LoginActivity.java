@@ -3,6 +3,7 @@ package com.hjq.demo.ui.activity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
@@ -12,8 +13,22 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.JsonUtils;
 import com.hjq.demo.R;
+import com.hjq.demo.api.Api;
+import com.hjq.demo.api.ApiImpl;
+import com.hjq.demo.api.InformationApi;
+import com.hjq.demo.api.UserApi;
+import com.hjq.demo.common.Constants;
 import com.hjq.demo.common.MyActivity;
+import com.hjq.demo.common.response.CustomCallback;
+import com.hjq.demo.common.response.Result;
+import com.hjq.demo.common.response.ResultCode;
+import com.hjq.demo.domain.user.Info;
+import com.hjq.demo.domain.user.User;
 import com.hjq.demo.helper.InputTextHelper;
 import com.hjq.demo.other.IntentKey;
 import com.hjq.demo.other.KeyboardWatcher;
@@ -23,8 +38,15 @@ import com.hjq.umeng.Platform;
 import com.hjq.umeng.UmengClient;
 import com.hjq.umeng.UmengLogin;
 
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import lombok.SneakyThrows;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  *    author : Android 轮子哥
@@ -59,6 +81,9 @@ public final class LoginActivity extends MyActivity
     @BindView(R.id.iv_login_wx)
     View mWeChatView;
 
+    UserApi api;
+    InformationApi infoApi;
+
     /** logo 缩放比例 */
     private final float mLogoScale = 0.8f;
     /** 动画时间 */
@@ -79,8 +104,8 @@ public final class LoginActivity extends MyActivity
 
                     @Override
                     public boolean onInputChange(InputTextHelper helper) {
-                        return mPhoneView.getText().toString().length() == 11 &&
-                                mPasswordView.getText().toString().length() >= 6;
+                        return mPhoneView.getText().toString().length() >= 1 &&
+                                mPasswordView.getText().toString().length() >= 1;
                     }
                 })
                 .build();
@@ -111,10 +136,17 @@ public final class LoginActivity extends MyActivity
             mWeChatView.setVisibility(View.GONE);
         }
 
+        //hide the two views (do not apply these two method to login)
+        mQQView.setVisibility(View.GONE);
+        mWeChatView.setVisibility(View.GONE);
+
         // 如果这两个都没有安装就隐藏提示
         if (mQQView.getVisibility() == View.GONE && mWeChatView.getVisibility() == View.GONE) {
             mOtherView.setVisibility(View.GONE);
         }
+
+        api = ApiImpl.getInstance(Api.USER,UserApi.class);
+        infoApi = ApiImpl.getInstance(Api.INFORMATION, InformationApi.class);
     }
 
     @Override
@@ -141,37 +173,93 @@ public final class LoginActivity extends MyActivity
                 startActivity(PasswordForgetActivity.class);
                 break;
             case R.id.btn_login_commit:
-                if (mPhoneView.getText().toString().length() != 11) {
-                    toast(R.string.common_phone_input_error);
-                } else {
-                    showLoading();
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showComplete();
-                            // 处理登录
-                            startActivityFinish(HomeActivity.class);
-                        }
-                    }, 2000);
-                }
+                showLoading();
+                api.login(mPhoneView.getText().toString(), mPasswordView.getText().toString())
+                        .enqueue(new Callback<ResponseBody>() {
+                            @SneakyThrows
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                String jsonStr = response.body().string();
+                                Log.d("apidebug",jsonStr);
+                                Log.d("apidebug",Integer.toString(jsonStr.length()));
+                                if(jsonStr.length() <= 3){
+                                    //失败
+                                    showComplete();
+                                    toast("登录失败，请重新登录");
+                                }
+                                else{
+                                    JSONObject object = JSON.parseObject(jsonStr);
+                                    JSONArray ja = object.getJSONArray("User");
+                                    JSONObject ject = ja.getJSONObject(0);
+                                    Log.d("apidebug",ject.toJSONString());
+                                    User user = new User();
+                                    user.setId(ject.getLong("id"));
+                                    user.setUsername(ject.getString("username"));
+                                    user.setPassward(ject.getString("passward"));
+                                    user.setActive(ject.getInteger("active"));
+                                    user.setAuthority(ject.getInteger("authority"));
+                                    user.setMomentlist(ject.getString("momentlist"));
+                                    user.setRelationlist(ject.getString("relationlist"));
+                                    user.setValue(ject.getString("value"));
+                                    user.setRequestgetlist(ject.getString("requestgetlist"));
+                                    user.setRequestsendlist(ject.getString("requestsendlist"));
+                                    user.setPersoninform(ject.getString("personinform"));
+
+                                    Constants.user = user;
+                                    showComplete();
+                                    toast("登录成功");
+                                    //get self information
+                                    infoApi.getUser(Constants.user.getPersoninform()).enqueue(new Callback<ResponseBody>() {
+                                        @SneakyThrows
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            if(response.body() != null){
+                                                String body = response.body().string();
+                                                Log.d("apidebug 界面初始化读取个人信息表",body);
+                                                if(body.length() >= 3){
+                                                    //有数据，而且必定是单条数据，直接读取
+                                                    JSONObject ob = JSON.parseObject(body);
+                                                    Info info = new Info();
+                                                    info.setId(ob.getLong("id"));
+                                                    info.setName(ob.getString("name"));
+                                                    info.setSex(ob.getString("sex"));
+                                                    info.setAge(ob.getInteger("age"));
+                                                    info.setTag1(ob.getString("tag1"));
+                                                    info.setTag2(ob.getString("tag2"));
+                                                    info.setTag3(ob.getString("tag3"));
+                                                    info.setCompany(ob.getString("company"));
+                                                    info.setPosition(ob.getString("position"));
+                                                    info.setMobile(ob.getString("mobile"));
+                                                    info.setEmail(ob.getString("email"));
+                                                    info.setAddress(ob.getString("address"));
+                                                    info.setMotto(ob.getString("motto"));
+                                                    info.setPortrait(ob.getString("portrait"));
+                                                    info.setBackground(ob.getString("background"));
+
+                                                    Constants.info = info;
+                                                }
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        }
+                                    });
+
+
+                                    startActivity(HomeActivity.class);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                showComplete();
+                                toast("登录失败，请重新登录");
+                            }
+                        });
+//                break;
+                //blocked third party
                 break;
             case R.id.iv_login_qq:
             case R.id.iv_login_wx:
-                toast("记得改好第三方 AppID 和 AppKey，否则会调不起来哦");
-                Platform platform;
-                switch (v.getId()) {
-                    case R.id.iv_login_qq:
-                        platform = Platform.QQ;
-                        break;
-                    case R.id.iv_login_wx:
-                        platform = Platform.WECHAT;
-                        toast("也别忘了改微信 " + WXEntryActivity.class.getSimpleName() + " 类所在的包名哦");
-                        break;
-                    default:
-                        throw new IllegalStateException("are you ok?");
-                }
-                UmengClient.login(this, platform, this);
-                break;
             default:
                 break;
         }

@@ -52,7 +52,7 @@ public class MvpPresenterProxyImpl implements IMvpPresenterProxy {
                     /**
                      * ClassCastException
                      * clazz.newInstance：检查一下自己注解的对象类型是否正确
-                     * field.set：检查一下自己的 V 层（Activity 或 Fragment）有没有实现 P 层对应的接口
+                     * field.set：检查一下自己的 V 层（SocialActivity 或 Fragment）有没有实现 P 层对应的接口
                      */
                     throw new IllegalStateException("are you ok?");
                 }

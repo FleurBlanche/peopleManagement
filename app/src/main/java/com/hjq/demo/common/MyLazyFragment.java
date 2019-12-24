@@ -163,7 +163,7 @@ public abstract class MyLazyFragment<A extends MyActivity>
         if (mTitleBar != null) {
             mTitleBar.setTitle(title);
         } else {
-            // 如果没有标题栏对象就直接设置给绑定的 Activity
+            // 如果没有标题栏对象就直接设置给绑定的 SocialActivity
             getAttachActivity().setTitle(title);
         }
     }

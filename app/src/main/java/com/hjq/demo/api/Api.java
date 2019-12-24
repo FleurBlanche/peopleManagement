@@ -3,13 +3,22 @@ package com.hjq.demo.api;
 import lombok.Getter;
 
 public enum Api {
-    USER("/user/");
+    USER("User/"),
+    ACTIVITY("Activity/"),
+    MOMENT("Moment/"),
+    REQUEST("Request/"),
+    RELATION("Relation/"),
+    RECORD("Record/"),
+    FILE("/"),
+    INFORMATION("Information/");
 
-
-    @Getter
     private String uri;
 
-    Api(String url) {
+    Api(String uri) {
         this.uri = uri;
+    }
+
+    public String getUri() {
+        return uri;
     }
 }

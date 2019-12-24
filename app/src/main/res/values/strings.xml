@@ -77,8 +77,8 @@
     <!-- 主页 -->
     <string name="home_exit_hint">再按一次退出</string>
     <string name="home_nav_index">首页</string>
-    <string name="home_nav_found">发现</string>
-    <string name="home_nav_message">消息</string>
+    <string name="home_nav_found">动态</string>
+    <string name="home_nav_message">人脉</string>
     <string name="home_nav_me">我的</string>
 
     <!-- 登录 -->
@@ -107,7 +107,7 @@
     <string name="setting_cache">清空缓存</string>
     <string name="setting_auto">自动登录</string>
     <string name="setting_agreement">隐私协议</string>
-    <string name="setting_about">关于我们</string>
+    <string name="setting_about">关于</string>
     <string name="setting_exit">退出登录</string>
 
     <!-- 关于 -->
@@ -175,5 +175,8 @@
 
     <string name="photo_launch_fail">无法启动相机</string>
     <string name="photo_picture_error">图片错误</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

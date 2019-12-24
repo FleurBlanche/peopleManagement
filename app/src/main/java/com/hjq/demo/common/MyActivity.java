@@ -30,7 +30,7 @@ import butterknife.Unbinder;
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/AndroidProject
  *    time   : 2018/10/18
- *    desc   : 项目中的 Activity 基类
+ *    desc   : 项目中的 SocialActivity 基类
  */
 public abstract class MyActivity extends BaseActivity
         implements OnTitleBarListener {

@@ -10,7 +10,7 @@ import com.hjq.demo.mvp.proxy.MvpPresenterProxyImpl;
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/AndroidProject
  *    time   : 2018/11/17
- *    desc   : MVP Activity 基类
+ *    desc   : MVP SocialActivity 基类
  */
 public abstract class MvpActivity extends MyActivity implements IMvpView {
 
